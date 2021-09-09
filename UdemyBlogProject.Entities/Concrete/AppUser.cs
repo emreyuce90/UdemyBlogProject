@@ -13,5 +13,7 @@ namespace UdemyBlogProject.Entities.Concrete
         public string Username { get; set; }
         public string Password { get; set; }
 
+        public List<Blog> Blogs { get; set; }
+
     }
 }
