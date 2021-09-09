@@ -11,6 +11,12 @@ namespace UdemyBlogProject.DataAccessLayer.Interfaces
     {
         Task<List<Tentity>> GetAllAsync();
         Task<List<Tentity>> GetAllAsync(Expression<Func<Tentity,bool>> filter);
+        //Standart filtresiz sorted metodu
+        Task<List<Tentity>> GetAllAsync<Tkey>(Expression<Func<Tentity,Tkey>> keySelector);
+
+        //Hem fltreli hem sorted metodu
+        Task<List<Tentity>> GetAllAsync<Tkey>(Expression<Func<Tentity,bool>> filter,Expression<Func<Tentity,Tkey>> keySelector);
+
         Task<Tentity> GetAsync(Expression<Func<Tentity,bool>> filter);
 
         Task AddAsync(Tentity tentity);

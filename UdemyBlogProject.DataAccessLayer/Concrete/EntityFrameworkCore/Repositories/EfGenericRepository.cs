@@ -26,24 +26,42 @@ namespace UdemyBlogProject.DataAccessLayer.Concrete.EntityFrameworkCore.Reposito
             return await context.Set<Tentity>().ToListAsync();
         }
 
-        public Task<List<Tentity>> GetAllAsync(Expression<Func<Tentity, bool>> filter)
+        public async Task<List<Tentity>> GetAllAsync(Expression<Func<Tentity, bool>> filter)
         {
-            throw new NotImplementedException();
+            using var context = new UdemyBlogContext();
+            return await context.Set<Tentity>().Where(filter).ToListAsync();
         }
 
-        public Task<Tentity> GetAsync(Expression<Func<Tentity, bool>> filter)
+        public async Task<List<Tentity>> GetAllAsync<Tkey>(Expression<Func<Tentity, Tkey>> keySelector)
         {
-            throw new NotImplementedException();
+            using var context = new UdemyBlogContext();
+            return await context.Set<Tentity>().OrderByDescending(keySelector).ToListAsync();
         }
 
-        public Task RemoveAsync(Tentity tentity)
+        public async Task<List<Tentity>> GetAllAsync<Tkey>(Expression<Func<Tentity, bool>> filter, Expression<Func<Tentity, Tkey>> keySelector)
         {
-            throw new NotImplementedException();
+            using var context = new UdemyBlogContext();
+            return await context.Set<Tentity>().Where(filter).OrderByDescending(keySelector).ToListAsync();
         }
 
-        public Task UpdateAsync(Tentity tentity)
+        public async Task<Tentity> GetAsync(Expression<Func<Tentity, bool>> filter)
         {
-            throw new NotImplementedException();
+            using var context = new UdemyBlogContext();
+            return await context.Set<Tentity>().FindAsync(filter);
+        }
+
+        public async Task RemoveAsync(Tentity tentity)
+        {
+            using var context = new UdemyBlogContext();
+            context.Remove(tentity);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Tentity tentity)
+        {
+            using var context = new UdemyBlogContext();
+            context.Update(tentity);
+            await context.SaveChangesAsync();
         }
     }
 }
