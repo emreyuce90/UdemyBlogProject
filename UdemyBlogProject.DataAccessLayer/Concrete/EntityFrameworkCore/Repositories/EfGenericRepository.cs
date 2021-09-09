@@ -20,6 +20,13 @@ namespace UdemyBlogProject.DataAccessLayer.Concrete.EntityFrameworkCore.Reposito
             await context.SaveChangesAsync();
         }
 
+        public async Task AddRangeAsync(List<Tentity> tentities)
+        {
+            using var context = new UdemyBlogContext();
+            await context.AddRangeAsync(tentities);
+            await context.SaveChangesAsync();
+        }
+
         public async Task<List<Tentity>> GetAllAsync()
         {
             using var context = new UdemyBlogContext();
@@ -54,6 +61,13 @@ namespace UdemyBlogProject.DataAccessLayer.Concrete.EntityFrameworkCore.Reposito
         {
             using var context = new UdemyBlogContext();
             context.Remove(tentity);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task RemoveRangeAsync(List<Tentity> tentities)
+        {
+            using var context = new UdemyBlogContext();
+            context.RemoveRange(tentities);
             await context.SaveChangesAsync();
         }
 

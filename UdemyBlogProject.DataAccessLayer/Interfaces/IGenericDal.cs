@@ -20,8 +20,10 @@ namespace UdemyBlogProject.DataAccessLayer.Interfaces
         Task<Tentity> GetAsync(Expression<Func<Tentity,bool>> filter);
 
         Task AddAsync(Tentity tentity);
+        Task AddRangeAsync(List<Tentity> tentities);
         Task UpdateAsync(Tentity tentity);
         Task RemoveAsync(Tentity tentity);
 
+        Task RemoveRangeAsync(List<Tentity> tentities);
     }
 }
