@@ -54,7 +54,7 @@ namespace UdemyBlogProject.DataAccessLayer.Concrete.EntityFrameworkCore.Reposito
         public async Task<Tentity> GetAsync(Expression<Func<Tentity, bool>> filter)
         {
             using var context = new UdemyBlogContext();
-            return await context.Set<Tentity>().FindAsync(filter);
+            return await context.Set<Tentity>().FirstOrDefaultAsync(filter);
         }
 
         public async Task RemoveAsync(Tentity tentity)
