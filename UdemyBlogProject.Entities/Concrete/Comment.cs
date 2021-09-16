@@ -12,7 +12,7 @@ namespace UdemyBlogProject.Entities.Concrete
         public string AuthorEmail { get; set; }
 
         public string Description { get; set; }
-        public DateTime ReleseDate { get; set; }
+        public DateTime ReleseDate { get; set; } = DateTime.Now;
 
 
         //Her bir yorumun alt yorumları olabilir
@@ -22,6 +22,10 @@ namespace UdemyBlogProject.Entities.Concrete
         public int? ParentCommentId { get; set; }
         public Comment ParentComment { get; set; }
         public List<Comment> SubComments { get; set; }
+
+        //Bir yorum bloğa yapılabilir
+        public int BlogId { get; set; }
+        public Blog Blog { get; set; }
 
     }
 }
