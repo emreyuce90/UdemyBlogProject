@@ -33,24 +33,10 @@ namespace UdemyBlogProject.BusinessLayer.Concrete
             return await _genericDal.GetAllAsync();
         }
 
-        public async Task<List<Tentity>> GetAllAsync(Expression<Func<Tentity, bool>> filter)
+       
+        public async Task<Tentity> GetByIdAsync(int id)
         {
-          return  await _genericDal.GetAllAsync(filter);
-        }
-
-        public async Task<List<Tentity>> GetAllAsync<Tkey>(Expression<Func<Tentity, bool>> filter, Expression<Func<Tentity, Tkey>> keySelector)
-        {
-           return await _genericDal.GetAllAsync(filter, keySelector);
-        }
-
-        public async Task<List<Tentity>> GetAllAsync<Tkey>(Expression<Func<Tentity, Tkey>> keySelector)
-        {
-             return await _genericDal.GetAllAsync(keySelector);
-        }
-
-        public async Task<Tentity> GetAsync(Expression<Func<Tentity, bool>> filter)
-        {
-            return await _genericDal.GetAsync(filter);
+            return await _genericDal.GetByIdAsync(id);
         }
 
         public async Task RemoveAsync(Tentity tentity)

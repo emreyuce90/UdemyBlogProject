@@ -12,14 +12,8 @@ namespace UdemyBlogProject.BusinessLayer.Interfaces
         //Hepsini getirir
         Task<List<Tentity>> GetAllAsync();
         //Where şartı ile hepsini getirir
-        Task<List<Tentity>> GetAllAsync(Expression<Func<Tentity,bool>> filter);
-        //Where şartı + orderby descending
-        Task<List<Tentity>> GetAllAsync<Tkey>(Expression<Func<Tentity,bool>> filter,Expression<Func<Tentity,Tkey>> keySelector);
-        //Sadece sort
-        Task<List<Tentity>> GetAllAsync<Tkey>(Expression<Func<Tentity,Tkey>> keySelector);
-        //Tek bir ürün getirme
-        Task<Tentity> GetAsync(Expression<Func<Tentity,bool>> filter);
 
+        Task<Tentity> GetByIdAsync(int id);
 
         Task AddAsync(Tentity tentity);
         Task AddRangeAsync(List<Tentity> tentities);

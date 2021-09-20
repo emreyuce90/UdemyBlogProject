@@ -19,6 +19,8 @@ namespace UdemyBlogProject.DataAccessLayer.Interfaces
 
         Task<Tentity> GetAsync(Expression<Func<Tentity,bool>> filter);
 
+        Task<Tentity> GetByIdAsync(int id);
+
         Task AddAsync(Tentity tentity);
         Task AddRangeAsync(List<Tentity> tentities);
         Task UpdateAsync(Tentity tentity);
