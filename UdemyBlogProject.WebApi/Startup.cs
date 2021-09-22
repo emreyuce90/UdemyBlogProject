@@ -40,6 +40,7 @@ namespace UdemyBlogProject.WebApi
             }
 
             app.UseRouting();
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 

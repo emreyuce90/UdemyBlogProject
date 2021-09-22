@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -30,26 +31,56 @@ namespace UdemyBlogProject.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        
+
         public async Task<IActionResult> GetById(int id)
         {
             return Ok(_mapper.Map<BlogListDto>(await _blogservice.GetByIdAsync(id)));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(BlogAddModel blogAddmodel)
+        public async Task<IActionResult> Create([FromForm]BlogAddModel blogAddmodel)
         {
+
+            if (blogAddmodel.File != null)
+            {
+                if (blogAddmodel.File.ContentType != "image/jpeg")
+                {
+                    return BadRequest("Tanınmayan dosya tipi!Lütfen sadece jpeg uzantılı dosyalar yükleyiniz");
+                }
+                var name = Guid.NewGuid() + blogAddmodel.File.FileName;
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", name);
+                var stream = new FileStream(path, FileMode.Create);
+                await blogAddmodel.File.CopyToAsync(stream);
+                blogAddmodel.ImagePath = name;
+            }
+
             await _blogservice.AddAsync(_mapper.Map<Blog>(blogAddmodel));
             return Created("", blogAddmodel);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id,BlogUpdateModel blogUpdateModel)
+        public async Task<IActionResult> Update(int id, [FromForm]BlogUpdateModel blogUpdateModel)
         {
-            if (id!= blogUpdateModel.Id)
+            if (id != blogUpdateModel.Id)
             {
                 return BadRequest("Girdiğiniz id veritabanında bulunmamaktadır");
             }
+
+            if (blogUpdateModel.File!=null)
+            {
+                if (blogUpdateModel.File.ContentType!="image/jpeg")
+                {
+                    return BadRequest("Lütfen sadece jpeg uzantılı resimler yükleyiniz");
+                }
+
+                string uniqueName = Guid.NewGuid() + blogUpdateModel.File.FileName;
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", uniqueName);
+                var stream = new FileStream(path, FileMode.Create);
+                await blogUpdateModel.File.CopyToAsync(stream);
+                blogUpdateModel.ImagePath = uniqueName;
+            }
+
+
             await _blogservice.UpdateAsync(_mapper.Map<Blog>(blogUpdateModel));
             return NoContent();
         }
@@ -59,6 +90,6 @@ namespace UdemyBlogProject.WebApi.Controllers
         {
             await _blogservice.RemoveAsync(new Blog { Id = id });
             return NoContent();
-        }    
+        }
     }
 }
