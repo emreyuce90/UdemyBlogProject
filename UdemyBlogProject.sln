@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdemyBlogProject.BusinessLa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdemyBlogProject.WebApi", "UdemyBlogProject.WebApi\UdemyBlogProject.WebApi.csproj", "{C8CF1AAD-9391-41C0-8B08-4D6872F3EE57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdemyBlogProject.DTO", "UdemyBlogProject.DTO\UdemyBlogProject.DTO.csproj", "{3978562D-F19E-4BFE-9C2A-89D925B8F075}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{C8CF1AAD-9391-41C0-8B08-4D6872F3EE57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8CF1AAD-9391-41C0-8B08-4D6872F3EE57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8CF1AAD-9391-41C0-8B08-4D6872F3EE57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3978562D-F19E-4BFE-9C2A-89D925B8F075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3978562D-F19E-4BFE-9C2A-89D925B8F075}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3978562D-F19E-4BFE-9C2A-89D925B8F075}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3978562D-F19E-4BFE-9C2A-89D925B8F075}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
