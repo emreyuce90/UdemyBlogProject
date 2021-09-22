@@ -15,6 +15,9 @@ namespace UdemyBlogProject.BusinessLayer.Containers.MicrosoftIOC
         {
             services.AddScoped(typeof(IGenericDal<>), typeof(EfGenericRepository<>));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericManager<>));
+
+            services.AddScoped<IBlogService, BlogManager>();
+            services.AddScoped<IBlogDal, EfBlogRepository>();
             
         }
     }
