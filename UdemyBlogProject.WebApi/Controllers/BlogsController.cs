@@ -48,7 +48,7 @@ namespace UdemyBlogProject.WebApi.Controllers
                     return BadRequest("Tanınmayan dosya tipi!Lütfen sadece jpeg uzantılı dosyalar yükleyiniz");
                 }
                 var name = Guid.NewGuid() + blogAddmodel.File.FileName;
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", name);
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/", name);
                 var stream = new FileStream(path, FileMode.Create);
                 await blogAddmodel.File.CopyToAsync(stream);
                 blogAddmodel.ImagePath = name;
@@ -66,22 +66,29 @@ namespace UdemyBlogProject.WebApi.Controllers
                 return BadRequest("Girdiğiniz id veritabanında bulunmamaktadır");
             }
 
-            if (blogUpdateModel.File!=null)
+            if (blogUpdateModel.File != null)
             {
-                if (blogUpdateModel.File.ContentType!="image/jpeg")
+                if (blogUpdateModel.File.ContentType != "image/jpeg")
                 {
                     return BadRequest("Lütfen sadece jpeg uzantılı resimler yükleyiniz");
                 }
 
                 string uniqueName = Guid.NewGuid() + blogUpdateModel.File.FileName;
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", uniqueName);
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/", uniqueName);
                 var stream = new FileStream(path, FileMode.Create);
                 await blogUpdateModel.File.CopyToAsync(stream);
                 blogUpdateModel.ImagePath = uniqueName;
             }
 
+            //db den gelen kayıt
+         var beUpdated=  await _blogservice.GetByIdAsync(blogUpdateModel.Id);
 
-            await _blogservice.UpdateAsync(_mapper.Map<Blog>(blogUpdateModel));
+            beUpdated.Title = blogUpdateModel.Title;
+            beUpdated.ShortDescription = blogUpdateModel.ShortDescription;
+            beUpdated.Description = blogUpdateModel.Description;
+
+
+            await _blogservice.UpdateAsync(beUpdated);
             return NoContent();
         }
 

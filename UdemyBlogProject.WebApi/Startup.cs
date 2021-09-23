@@ -27,7 +27,9 @@ namespace UdemyBlogProject.WebApi
         {
             services.AddAutoMapper(typeof(Startup));
             services.AddDependencies();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opt=> {
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
            
         }
 
