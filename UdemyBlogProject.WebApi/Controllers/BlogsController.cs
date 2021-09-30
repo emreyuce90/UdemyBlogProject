@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UdemyBlogProject.BusinessLayer.Interfaces;
@@ -38,6 +39,7 @@ namespace UdemyBlogProject.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromForm]BlogAddModel blogAddmodel)
         {
 
@@ -57,7 +59,7 @@ namespace UdemyBlogProject.WebApi.Controllers
             await _blogservice.AddAsync(_mapper.Map<Blog>(blogAddmodel));
             return Created("", blogAddmodel);
         }
-
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromForm]BlogUpdateModel blogUpdateModel)
         {
@@ -91,7 +93,7 @@ namespace UdemyBlogProject.WebApi.Controllers
             await _blogservice.UpdateAsync(beUpdated);
             return NoContent();
         }
-
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

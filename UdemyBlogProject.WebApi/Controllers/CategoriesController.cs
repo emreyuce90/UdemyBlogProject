@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UdemyBlogProject.BusinessLayer.Interfaces;
@@ -32,14 +33,14 @@ namespace UdemyBlogProject.WebApi.Controllers
         {
             return Ok(_mapper.Map<CategoryListDto>(await _categoryService.GetByIdAsync(Id)));
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddCategory ([FromForm]CategoryAddDto categoryAddDto)
         {
             await _categoryService.AddAsync(_mapper.Map<Category>(categoryAddDto));
             return Created("",categoryAddDto);
         }
-
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCategory(int id,[FromForm]CategoryUpdateDto categoryUpdateDto)
         {
@@ -50,7 +51,7 @@ namespace UdemyBlogProject.WebApi.Controllers
             await _categoryService.UpdateAsync(_mapper.Map<Category>(categoryUpdateDto));
             return NoContent();
         }
-
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
