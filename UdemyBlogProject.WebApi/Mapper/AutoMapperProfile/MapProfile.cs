@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UdemyBlogProject.DTO.DTOs.AppUserDtos;
 using UdemyBlogProject.DTO.DTOs.BlogDtos;
 using UdemyBlogProject.DTO.DTOs.CategoryDtos;
 using UdemyBlogProject.Entities.Concrete;
@@ -33,6 +34,9 @@ namespace UdemyBlogProject.WebApi.Mapper.AutoMapperProfile
 
             CreateMap<CategoryUpdateDto, Category>();
             CreateMap<Category, CategoryUpdateDto>();
+
+            CreateMap<AppUser, AppUserLoginDto>();
+            CreateMap<AppUserLoginDto, AppUser>();
 
         }
     }
