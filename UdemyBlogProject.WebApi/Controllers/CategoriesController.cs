@@ -35,16 +35,16 @@ namespace UdemyBlogProject.WebApi.Controllers
         }
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> AddCategory ([FromForm]CategoryAddDto categoryAddDto)
+        public async Task<IActionResult> AddCategory([FromForm]CategoryAddDto categoryAddDto)
         {
             await _categoryService.AddAsync(_mapper.Map<Category>(categoryAddDto));
-            return Created("",categoryAddDto);
+            return Created("", categoryAddDto);
         }
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(int id,[FromForm]CategoryUpdateDto categoryUpdateDto)
+        public async Task<IActionResult> UpdateCategory(int id, [FromForm]CategoryUpdateDto categoryUpdateDto)
         {
-            if (categoryUpdateDto.Id!=id)
+            if (categoryUpdateDto.Id != id)
             {
                 return BadRequest("Girdiğiniz id ye ait bir kayıt bulunamadı");
             }
@@ -58,5 +58,32 @@ namespace UdemyBlogProject.WebApi.Controllers
             await _categoryService.RemoveAsync(new Category { Id = id });
             return NoContent();
         }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> CategoriesCountBlogs()
+        {
+            //Kategoriler Bloglarla birlikte geldi
+            var categories = await _categoryService.GetCategoryWithBlogsAsync();
+            //Göstermek istediğimiz tablo kategoriler ve blog sayıları
+            List<CategoryBlogListDto> dto = new List<CategoryBlogListDto>();
+
+            //gelen kategorileri tek tek dön her biri bir kategori
+            foreach (var category in categories)
+            {
+                //Dtomuzdan bir nesne örneği alalım 
+                CategoryBlogListDto listDto = new CategoryBlogListDto()
+                {
+                    //Dto muzdaki kategorimize db den gelen kategoriyi eşitledik 
+                    Categories = category,
+                    //Db den gelen kategorinin blog sayılarını BlogCount nesnesine eşitledik
+                    BlogCount = category.BlogCategories.Count
+                    
+                };
+                //dto listemize ekle
+                dto.Add(listDto);
+            }
+            return Ok(dto);
+        }
+
     }
 }

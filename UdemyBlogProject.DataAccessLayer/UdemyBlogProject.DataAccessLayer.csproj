@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\UdemyBlogProject.DTO\UdemyBlogProject.DTO.csproj" />
     <ProjectReference Include="..\UdemyBlogProject.Entities\UdemyBlogProject.Entities.csproj" />
   </ItemGroup>
 
