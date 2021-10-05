@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,7 +36,8 @@ namespace UdemyBlogProject.WebApi
             services.AddDependencies();
             //
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
-                opt=> {
+                opt =>
+                {
                     //Þu an ssl sertifikamýz olmadýðý için bearer token ýn güvenlik sertifikiasýný false yaptýk
                     opt.RequireHttpsMetadata = false;
                     //Token ýn validasyon parametrelerini yazalým
@@ -46,15 +48,15 @@ namespace UdemyBlogProject.WebApi
                         //Token ý kim tüketir
                         ValidAudience = JWTStrings.Audience,
                         //Güvenlik anahtarýmýzýn decode edilmesi
-                        IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTStrings.SecurityKey)),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTStrings.SecurityKey)),
                         //Token yaþam süresi bittiðinde tokený geçersiz kýlar
-                        ValidateLifetime=true,
+                        ValidateLifetime = true,
                         //Token ý kullanacak portu kontrol eder
-                        ValidateAudience=true,
+                        ValidateAudience = true,
                         //Token ý oluþturan portu kontrol eder
-                        ValidateIssuer=true,
+                        ValidateIssuer = true,
                         //Ýstekte bulunan makine ile deploy edilen server arasýnda zaman farký var ise bu zaman farkýný ortadan kaldýrýr
-                        ClockSkew=TimeSpan.Zero
+                        ClockSkew = TimeSpan.Zero
 
                     };
 
@@ -63,10 +65,11 @@ namespace UdemyBlogProject.WebApi
 
 
 
-            services.AddControllers().AddNewtonsoftJson(opt=> {
+            services.AddControllers().AddNewtonsoftJson(opt =>
+            {
                 opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            });
-           
+            }).AddFluentValidation();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
