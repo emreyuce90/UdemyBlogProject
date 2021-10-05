@@ -18,6 +18,7 @@ namespace UdemyBlogProject.WebApi.Controllers
             _blogService = blogService;
         }
         [HttpGet("[action]/{id}")]
+       
         public async Task<IActionResult> GetBlogImageById(int id)
         {
             var blog= await _blogService.GetByIdAsync(id);

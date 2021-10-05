@@ -10,6 +10,7 @@ using UdemyBlogProject.BusinessLayer.Interfaces;
 using UdemyBlogProject.BusinessLayer.Utilities.JwtTools;
 using UdemyBlogProject.DTO.DTOs.AppUserDtos;
 using UdemyBlogProject.Entities.Concrete;
+using UdemyBlogProject.WebApi.CustomFilters;
 
 namespace UdemyBlogProject.WebApi.Controllers
 {
@@ -27,6 +28,7 @@ namespace UdemyBlogProject.WebApi.Controllers
             _jwtService = jwtService;
         }
         [HttpPost]
+        [ValidModel]
         //Token oluşturma
         public async Task<IActionResult> SignIn(AppUserLoginDto appUserLoginDto)
         {

@@ -11,6 +11,7 @@ using UdemyBlogProject.BusinessLayer.Interfaces;
 using UdemyBlogProject.DTO.DTOs.BlogCategoryDtos;
 using UdemyBlogProject.DTO.DTOs.BlogDtos;
 using UdemyBlogProject.Entities.Concrete;
+using UdemyBlogProject.WebApi.CustomFilters;
 using UdemyBlogProject.WebApi.Models;
 
 namespace UdemyBlogProject.WebApi.Controllers
@@ -33,7 +34,7 @@ namespace UdemyBlogProject.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-
+        [ServiceFilter(typeof(ValidId<Blog>))]
         public async Task<IActionResult> GetById(int id)
         {
             return Ok(_mapper.Map<BlogListDto>(await _blogservice.GetByIdAsync(id)));
@@ -41,6 +42,7 @@ namespace UdemyBlogProject.WebApi.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidModel]
         public async Task<IActionResult> Create([FromForm]BlogAddModel blogAddmodel)
         {
 
@@ -60,7 +62,10 @@ namespace UdemyBlogProject.WebApi.Controllers
             await _blogservice.AddAsync(_mapper.Map<Blog>(blogAddmodel));
             return Created("", blogAddmodel);
         }
+
+        [ServiceFilter(typeof(ValidId<Blog>))]
         [Authorize]
+        [ValidModel]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromForm]BlogUpdateModel blogUpdateModel)
         {
@@ -96,6 +101,8 @@ namespace UdemyBlogProject.WebApi.Controllers
         }
         [Authorize]
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(ValidId<Blog>))]
+
         public async Task<IActionResult> Delete(int id)
         {
             await _blogservice.RemoveAsync(new Blog { Id = id });
@@ -104,12 +111,15 @@ namespace UdemyBlogProject.WebApi.Controllers
 
         [Authorize]
         [HttpPost("[action]")]
+        [ValidModel]
         public async Task<IActionResult> AddCategoryToBlog(BlogCategoryDto blogCategoryDto)
         {
             await _blogservice.AddCategoryToBlogsAsync(blogCategoryDto);
             return Created("", blogCategoryDto);
         }
 
+
+        [ValidModel]
         [Authorize]
         [HttpDelete("[action]")]
         public async Task<IActionResult> RemoveCategoryFromBlog(BlogCategoryDto blogCategoryDto)

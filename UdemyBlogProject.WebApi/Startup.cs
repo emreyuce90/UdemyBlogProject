@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using UdemyBlogProject.BusinessLayer.Containers.MicrosoftIOC;
 using UdemyBlogProject.BusinessLayer.StringInfos;
+using UdemyBlogProject.WebApi.CustomFilters;
 
 namespace UdemyBlogProject.WebApi
 {
@@ -30,6 +31,7 @@ namespace UdemyBlogProject.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup));
+            services.AddScoped(typeof(ValidId<>));
             services.AddDependencies();
             //
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(

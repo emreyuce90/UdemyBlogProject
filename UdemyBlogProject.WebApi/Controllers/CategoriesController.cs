@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using UdemyBlogProject.BusinessLayer.Interfaces;
 using UdemyBlogProject.DTO.DTOs.CategoryDtos;
 using UdemyBlogProject.Entities.Concrete;
+using UdemyBlogProject.WebApi.CustomFilters;
 
 namespace UdemyBlogProject.WebApi.Controllers
 {
@@ -29,12 +30,14 @@ namespace UdemyBlogProject.WebApi.Controllers
             return Ok(_mapper.Map<List<CategoryListDto>>(await _categoryService.GetAllAsync()));
         }
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(ValidId<Category>))]
         public async Task<IActionResult> GetById(int Id)
         {
             return Ok(_mapper.Map<CategoryListDto>(await _categoryService.GetByIdAsync(Id)));
         }
         [Authorize]
         [HttpPost]
+        [ValidModel]
         public async Task<IActionResult> AddCategory([FromForm]CategoryAddDto categoryAddDto)
         {
             await _categoryService.AddAsync(_mapper.Map<Category>(categoryAddDto));
@@ -42,6 +45,8 @@ namespace UdemyBlogProject.WebApi.Controllers
         }
         [Authorize]
         [HttpPut("{id}")]
+        [ValidModel]
+        [ServiceFilter(typeof(ValidId<Category>))]
         public async Task<IActionResult> UpdateCategory(int id, [FromForm]CategoryUpdateDto categoryUpdateDto)
         {
             if (categoryUpdateDto.Id != id)
@@ -53,6 +58,7 @@ namespace UdemyBlogProject.WebApi.Controllers
         }
         [Authorize]
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(ValidId<Category>))]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             await _categoryService.RemoveAsync(new Category { Id = id });
