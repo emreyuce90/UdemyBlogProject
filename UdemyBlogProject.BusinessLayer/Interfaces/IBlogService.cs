@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using UdemyBlogProject.DTO.DTOs.BlogCategoryDtos;
@@ -13,5 +14,9 @@ namespace UdemyBlogProject.BusinessLayer.Interfaces
         Task AddCategoryToBlogsAsync(BlogCategoryDto blogCategoryDto);
 
         Task DeleteCategoryFromBlog(BlogCategoryDto blogCategoryDto);
+
+        Task<List<Blog>> GetAllWithCategoryIdAsync(int categoryId);
+
+
     }
 }

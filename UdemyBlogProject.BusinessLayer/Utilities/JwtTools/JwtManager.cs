@@ -17,7 +17,7 @@ namespace UdemyBlogProject.BusinessLayer.Utilities.JwtTools
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTStrings.SecurityKey));
             SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            JwtSecurityToken securityToken = new JwtSecurityToken(issuer: JWTStrings.Issuer, audience: JWTStrings.Audience, claims: null, notBefore: DateTime.Now, expires: DateTime.Now.AddMinutes(JWTStrings.Expire), signingCredentials: credentials);
+            JwtSecurityToken securityToken = new JwtSecurityToken(issuer: JWTStrings.Issuer, audience: JWTStrings.Audience, claims: SetClaims(appuser), notBefore: DateTime.Now, expires: DateTime.Now.AddMinutes(JWTStrings.Expire), signingCredentials: credentials);
   
             JwtToken jwtToken = new JwtToken();
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();

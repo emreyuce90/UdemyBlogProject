@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UdemyBlogProject.BusinessLayer.Interfaces;
 using UdemyBlogProject.DataAccessLayer.Interfaces;
+using UdemyBlogProject.DTO.DTOs.AppUserDtos;
 using UdemyBlogProject.Entities.Concrete;
 
 namespace UdemyBlogProject.BusinessLayer.Concrete
@@ -23,7 +24,8 @@ namespace UdemyBlogProject.BusinessLayer.Concrete
 
         public async Task<AppUser> FindUserNameAsync(string userName)
         {
-            return await _genericDal.GetAsync(I => I.Name == userName);
+           return await _genericDal.GetAsync(I => I.Name == userName);
+            
         }
     }
 }

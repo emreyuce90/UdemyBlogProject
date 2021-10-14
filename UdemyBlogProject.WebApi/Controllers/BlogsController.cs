@@ -20,6 +20,7 @@ namespace UdemyBlogProject.WebApi.Controllers
     [ApiController]
     public class BlogsController : ControllerBase
     {
+
         private readonly IBlogService _blogservice;
         private readonly IMapper _mapper;
         public BlogsController(IBlogService blogservice, IMapper mapper)
@@ -34,7 +35,7 @@ namespace UdemyBlogProject.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [ServiceFilter(typeof(ValidId<Blog>))]
+        
         public async Task<IActionResult> GetById(int id)
         {
             return Ok(_mapper.Map<BlogListDto>(await _blogservice.GetByIdAsync(id)));
@@ -89,7 +90,7 @@ namespace UdemyBlogProject.WebApi.Controllers
             }
 
             //db den gelen kayıt
-         var beUpdated=  await _blogservice.GetByIdAsync(blogUpdateModel.Id);
+            var beUpdated = await _blogservice.GetByIdAsync(blogUpdateModel.Id);
 
             beUpdated.Title = blogUpdateModel.Title;
             beUpdated.ShortDescription = blogUpdateModel.ShortDescription;
@@ -127,5 +128,17 @@ namespace UdemyBlogProject.WebApi.Controllers
             await _blogservice.DeleteCategoryFromBlog(blogCategoryDto);
             return NoContent();
         }
+        //[ServiceFilter(typeof(ValidId<Category>))]
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetBlogsWithCategories(int id)
+        {
+            var blogs = await _blogservice.GetAllWithCategoryIdAsync(id);
+
+            return Ok(blogs);
+     
+        }
+
+
+
     }
 }

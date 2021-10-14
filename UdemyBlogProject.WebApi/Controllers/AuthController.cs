@@ -27,8 +27,9 @@ namespace UdemyBlogProject.WebApi.Controllers
             _mapper = mapper;
             _jwtService = jwtService;
         }
-        [HttpPost]
+        [HttpPost("[action]")]
         [ValidModel]
+        
         //Token oluşturma
         public async Task<IActionResult> SignIn(AppUserLoginDto appUserLoginDto)
         {
@@ -43,7 +44,7 @@ namespace UdemyBlogProject.WebApi.Controllers
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet("[action]")]
         public async Task<IActionResult> ActiveUser()
         {
             var user = await _appUserService.FindUserNameAsync(User.Identity.Name);

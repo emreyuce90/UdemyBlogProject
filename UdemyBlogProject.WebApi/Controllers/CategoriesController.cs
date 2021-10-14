@@ -30,7 +30,7 @@ namespace UdemyBlogProject.WebApi.Controllers
             return Ok(_mapper.Map<List<CategoryListDto>>(await _categoryService.GetAllAsync()));
         }
         [HttpGet("{id}")]
-        [ServiceFilter(typeof(ValidId<Category>))]
+        //[ServiceFilter(typeof(ValidId<Category>))]
         public async Task<IActionResult> GetById(int Id)
         {
             return Ok(_mapper.Map<CategoryListDto>(await _categoryService.GetByIdAsync(Id)));
@@ -80,7 +80,8 @@ namespace UdemyBlogProject.WebApi.Controllers
                 CategoryBlogListDto listDto = new CategoryBlogListDto()
                 {
                     //Dto muzdaki kategorimize db den gelen kategoriyi eşitledik 
-                    Categories = category,
+                    Id = category.Id,
+                    Name=category.Name,
                     //Db den gelen kategorinin blog sayılarını BlogCount nesnesine eşitledik
                     BlogCount = category.BlogCategories.Count
                     

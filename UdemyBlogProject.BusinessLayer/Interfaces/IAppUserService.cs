@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using UdemyBlogProject.DTO.DTOs.AppUserDtos;
 using UdemyBlogProject.Entities.Concrete;
 
 namespace UdemyBlogProject.BusinessLayer.Interfaces

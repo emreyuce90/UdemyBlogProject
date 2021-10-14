@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using UdemyBlogProject.BusinessLayer.Interfaces;
@@ -11,13 +12,15 @@ namespace UdemyBlogProject.BusinessLayer.Concrete
 {
     public class BlogManager:GenericManager<Blog>,IBlogService
     {
+        private readonly IBlogDal _blogDal;
         private readonly IGenericDal<Blog> _genericDal;
         //Bloğu kategoriye ekleyeceğimiz için aslında BlogCategory tablosuna kayıt yapacağız
         private readonly IGenericDal<BlogCategory> _blogCategoryDal;
-        public BlogManager(IGenericDal<Blog> genericDal,IGenericDal<BlogCategory> blogCategoryDal) :base(genericDal)
+        public BlogManager(IGenericDal<Blog> genericDal,IGenericDal<BlogCategory> blogCategoryDal, IBlogDal blogDal) :base(genericDal)
         {
             _genericDal = genericDal;
             _blogCategoryDal = blogCategoryDal;
+            _blogDal = blogDal;
         }
 
         public async Task AddCategoryToBlogsAsync(BlogCategoryDto blogCategoryDto)
@@ -43,6 +46,11 @@ namespace UdemyBlogProject.BusinessLayer.Concrete
         public async Task<List<Blog>> GetAllSortedByPostedTimeAsync()
         {
            return await _genericDal.GetAllAsync(I => I.ReleaseDate);
+        }
+
+        public async Task<List<Blog>> GetAllWithCategoryIdAsync(int categoryId)
+        {
+            return await _blogDal.GetAllWithCategoryIdAsync(categoryId);
         }
     }
 }
