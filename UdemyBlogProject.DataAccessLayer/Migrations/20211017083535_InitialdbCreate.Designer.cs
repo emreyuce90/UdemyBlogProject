@@ -10,8 +10,8 @@ using UdemyBlogProject.DataAccessLayer.Concrete.EntityFrameworkCore.Context;
 namespace UdemyBlogProject.DataAccessLayer.Migrations
 {
     [DbContext(typeof(UdemyBlogContext))]
-    [Migration("20210916092700_InitialDbCreate")]
-    partial class InitialDbCreate
+    [Migration("20211017083535_InitialdbCreate")]
+    partial class InitialdbCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

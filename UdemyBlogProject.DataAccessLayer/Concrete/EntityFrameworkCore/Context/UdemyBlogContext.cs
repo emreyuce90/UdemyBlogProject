@@ -11,7 +11,8 @@ namespace UdemyBlogProject.DataAccessLayer.Concrete.EntityFrameworkCore.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=(localdb)\\mssqllocaldb;database=UdemyBlogDB;integrated security =true");
+            //optionsBuilder.UseSqlServer("server=(localdb)\\mssqllocaldb;database=UdemyBlogDB;integrated security =true");
+            optionsBuilder.UseSqlServer("workstation id = myblogdb39.mssql.somee.com; packet size = 4096; user id = emreyuce39_SQLLogin_1; pwd = 91ztc8184j; data source = myblogdb39.mssql.somee.com; persist security info = False; initial catalog = myblogdb39");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UdemyBlogProject.DataAccessLayer.Migrations
 {
-    public partial class InitialDbCreate : Migration
+    public partial class InitialdbCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
