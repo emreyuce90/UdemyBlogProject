@@ -50,7 +50,7 @@ namespace UdemyBlogProject.WebApi.Controllers
             var user = await _appUserService.FindUserNameAsync(User.Identity.Name);
 
 
-            return Ok(new AppUserDto { Name = user.Name, Surname = user.Surname }); ;
+            return Ok(new AppUserDto { Id=user.Id,Name = user.Name, Surname = user.Surname }); ;
         }
     }
 }
