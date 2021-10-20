@@ -29,15 +29,15 @@ namespace UdemyBlogProject.WebApi.Controllers
         }
         [HttpPost("[action]")]
         [ValidModel]
-        
+
         //Token oluşturma
         public async Task<IActionResult> SignIn(AppUserLoginDto appUserLoginDto)
         {
-         var user=   await _appUserService.CheckUserNameAndPasswordAsync(_mapper.Map<AppUser>(appUserLoginDto));
+            var user = await _appUserService.CheckUserNameAndPasswordAsync(_mapper.Map<AppUser>(appUserLoginDto));
 
-            if (user!=null)
+            if (user != null)
             {
-                
+
                 return Created("", _jwtService.GenerateToken(user));
             }
             return BadRequest("Kullanıcı adı veya şifre hatalı");
@@ -50,7 +50,7 @@ namespace UdemyBlogProject.WebApi.Controllers
             var user = await _appUserService.FindUserNameAsync(User.Identity.Name);
 
 
-            return Ok(new AppUserDto { Id=user.Id,Name = user.Name, Surname = user.Surname }); ;
+            return Ok(new AppUserDto { Id = user.Id, Name = user.Name, Surname = user.Surname }); ;
         }
     }
 }

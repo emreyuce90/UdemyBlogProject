@@ -64,17 +64,18 @@ namespace UdemyBlogProject.WebApi.Controllers
             return Created("", blogAddmodel);
         }
 
-        [ServiceFilter(typeof(ValidId<Blog>))]
+        //[ServiceFilter(typeof(ValidId<Blog>))]
         [Authorize]
         [ValidModel]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromForm]BlogUpdateModel blogUpdateModel)
         {
+            
             if (id != blogUpdateModel.Id)
             {
                 return BadRequest("Girdiğiniz id veritabanında bulunmamaktadır");
             }
-
+            var beUpdated = await _blogservice.GetByIdAsync(blogUpdateModel.Id);
             if (blogUpdateModel.File != null)
             {
                 if (blogUpdateModel.File.ContentType != "image/jpeg")
@@ -87,11 +88,11 @@ namespace UdemyBlogProject.WebApi.Controllers
                 var stream = new FileStream(path, FileMode.Create);
                 await blogUpdateModel.File.CopyToAsync(stream);
                 blogUpdateModel.ImagePath = uniqueName;
+                beUpdated.ImagePath = blogUpdateModel.ImagePath;
             }
 
             //db den gelen kayıt
-            var beUpdated = await _blogservice.GetByIdAsync(blogUpdateModel.Id);
-
+           
             beUpdated.Title = blogUpdateModel.Title;
             beUpdated.ShortDescription = blogUpdateModel.ShortDescription;
             beUpdated.Description = blogUpdateModel.Description;
