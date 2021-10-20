@@ -103,7 +103,7 @@ namespace UdemyBlogProject.WebApi.Controllers
         }
         [Authorize]
         [HttpDelete("{id}")]
-        [ServiceFilter(typeof(ValidId<Blog>))]
+        //[ServiceFilter(typeof(ValidId<Blog>))]
 
         public async Task<IActionResult> Delete(int id)
         {
