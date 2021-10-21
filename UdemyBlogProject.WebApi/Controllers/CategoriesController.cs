@@ -46,7 +46,7 @@ namespace UdemyBlogProject.WebApi.Controllers
         [Authorize]
         [HttpPut("{id}")]
         [ValidModel]
-        [ServiceFilter(typeof(ValidId<Category>))]
+        //[ServiceFilter(typeof(ValidId<Category>))]
         public async Task<IActionResult> UpdateCategory(int id, [FromForm]CategoryUpdateDto categoryUpdateDto)
         {
             if (categoryUpdateDto.Id != id)
