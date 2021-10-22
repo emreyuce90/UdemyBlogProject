@@ -58,7 +58,7 @@ namespace UdemyBlogProject.WebApi.Controllers
         }
         [Authorize]
         [HttpDelete("{id}")]
-        [ServiceFilter(typeof(ValidId<Category>))]
+        //[ServiceFilter(typeof(ValidId<Category>))]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             await _categoryService.RemoveAsync(new Category { Id = id });
