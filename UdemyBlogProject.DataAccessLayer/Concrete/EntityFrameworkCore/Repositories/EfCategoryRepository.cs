@@ -13,6 +13,21 @@ namespace UdemyBlogProject.DataAccessLayer.Concrete.EntityFrameworkCore.Reposito
 {
     public class EfCategoryRepository : EfGenericRepository<Category>, ICategoryDal
     {
+        public async Task<List<Category>> GetCategoriesByBlogIdAsync(int id)
+        {
+            using var context = new UdemyBlogContext();
+           return await context.Categories.Join(context.BlogCategories, c => c.Id, bc => bc.CategoryId, (category, blogcategory) => new
+            {
+                category = category,
+                blogcategory = blogcategory
+            }
+            ).Where(I=>I.blogcategory.BlogId == id).Select(I => new Category
+            {
+                Id=I.category.Id,
+                Name=I.category.Name
+            }).ToListAsync();
+        }
+
         public async Task<List<Category>> GetCategoryWithBlogsAsync()
         {
             using var context = new UdemyBlogContext();

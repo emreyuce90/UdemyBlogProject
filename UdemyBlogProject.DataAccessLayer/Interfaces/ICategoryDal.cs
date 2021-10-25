@@ -10,5 +10,6 @@ namespace UdemyBlogProject.DataAccessLayer.Interfaces
     public interface ICategoryDal:IGenericDal<Category>
     {
         Task<List<Category>> GetCategoryWithBlogsAsync();
+        Task<List<Category>> GetCategoriesByBlogIdAsync(int id);
     }
 }

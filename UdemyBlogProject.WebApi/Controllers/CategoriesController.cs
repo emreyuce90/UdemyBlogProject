@@ -92,5 +92,13 @@ namespace UdemyBlogProject.WebApi.Controllers
             return Ok(dto);
         }
 
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetCategoriesByBlogId(int id)
+        {
+            
+            return Ok (await _categoryService.GetCategoriesByBlogIdAsync(id));
+        }
+
+
     }
 }

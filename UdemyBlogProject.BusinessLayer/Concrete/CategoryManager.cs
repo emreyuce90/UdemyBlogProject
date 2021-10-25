@@ -26,6 +26,13 @@ namespace UdemyBlogProject.BusinessLayer.Concrete
            return await  _genericDal.GetAllAsync(I => I.Id);
         }
 
+        public async Task<List<Category>> GetCategoriesByBlogIdAsync(int id)
+        {
+            return await _categoryDal.GetCategoriesByBlogIdAsync(id);
+        }
+
+   
+
         public async Task<List<Category>> GetCategoryWithBlogsAsync()
         {
             return await _categoryDal.GetCategoryWithBlogsAsync();
