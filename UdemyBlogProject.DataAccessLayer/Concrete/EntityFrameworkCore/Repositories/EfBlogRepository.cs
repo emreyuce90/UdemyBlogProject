@@ -35,5 +35,11 @@ namespace UdemyBlogProject.DataAccessLayer.Concrete.EntityFrameworkCore.Reposito
 
             }).ToListAsync();
         }
+
+        public async Task<List<Blog>> GetFiveBlogsAsync()
+        {
+            using var context = new UdemyBlogContext();
+          return await context.Blogs.OrderByDescending(I => I.ReleaseDate).Take(5).ToListAsync();
+        }
     }
 }

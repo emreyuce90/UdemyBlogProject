@@ -139,6 +139,12 @@ namespace UdemyBlogProject.WebApi.Controllers
      
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetLastFiveBlogs()
+        {
+            
+            return Ok(_mapper.Map<List<BlogListDto>>(await _blogservice.GetFiveBlogsAsync()));
+        }
 
 
     }

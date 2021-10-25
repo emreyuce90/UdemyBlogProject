@@ -52,5 +52,10 @@ namespace UdemyBlogProject.BusinessLayer.Concrete
         {
             return await _blogDal.GetAllWithCategoryIdAsync(categoryId);
         }
+
+        public async Task<List<Blog>> GetFiveBlogsAsync()
+        {
+           return await _blogDal.GetFiveBlogsAsync();
+        }
     }
 }

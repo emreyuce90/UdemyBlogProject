@@ -17,6 +17,7 @@ namespace UdemyBlogProject.BusinessLayer.Interfaces
 
         Task<List<Blog>> GetAllWithCategoryIdAsync(int categoryId);
 
+        Task<List<Blog>> GetFiveBlogsAsync();
 
     }
 }
