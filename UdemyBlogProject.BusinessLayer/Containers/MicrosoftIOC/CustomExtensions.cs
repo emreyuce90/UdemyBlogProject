@@ -29,6 +29,10 @@ namespace UdemyBlogProject.BusinessLayer.Containers.MicrosoftIOC
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<ICategoryDal, EfCategoryRepository>();
 
+            services.AddScoped<ICommentService,CommentManager>();
+            services.AddScoped<ICommentDal,EfCommentRepository>();
+
+
             services.AddScoped<IJwtService, JwtManager>();
 
             services.AddScoped<IAppUserService, AppUserManager>();
