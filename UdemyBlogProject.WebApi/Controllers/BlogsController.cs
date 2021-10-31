@@ -22,10 +22,12 @@ namespace UdemyBlogProject.WebApi.Controllers
     {
 
         private readonly IBlogService _blogservice;
+        private readonly ICommentService _commentService;
         private readonly IMapper _mapper;
-        public BlogsController(IBlogService blogservice, IMapper mapper)
+        public BlogsController(IBlogService blogservice, ICommentService commentService, IMapper mapper)
         {
             _blogservice = blogservice;
+            _commentService = commentService;
             _mapper = mapper;
         }
         [HttpGet]
@@ -35,7 +37,7 @@ namespace UdemyBlogProject.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        
+
         public async Task<IActionResult> GetById(int id)
         {
             return Ok(_mapper.Map<BlogListDto>(await _blogservice.GetByIdAsync(id)));
@@ -44,7 +46,7 @@ namespace UdemyBlogProject.WebApi.Controllers
         [HttpPost]
         [Authorize]
         [ValidModel]
-        public async Task<IActionResult> Create([FromForm]BlogAddModel blogAddmodel)
+        public async Task<IActionResult> Create([FromForm] BlogAddModel blogAddmodel)
         {
 
             if (blogAddmodel.File != null)
@@ -68,9 +70,9 @@ namespace UdemyBlogProject.WebApi.Controllers
         [Authorize]
         [ValidModel]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromForm]BlogUpdateModel blogUpdateModel)
+        public async Task<IActionResult> Update(int id, [FromForm] BlogUpdateModel blogUpdateModel)
         {
-            
+
             if (id != blogUpdateModel.Id)
             {
                 return BadRequest("Girdiğiniz id veritabanında bulunmamaktadır");
@@ -92,7 +94,7 @@ namespace UdemyBlogProject.WebApi.Controllers
             }
 
             //db den gelen kayıt
-           
+
             beUpdated.Title = blogUpdateModel.Title;
             beUpdated.ShortDescription = blogUpdateModel.ShortDescription;
             beUpdated.Description = blogUpdateModel.Description;
@@ -136,15 +138,22 @@ namespace UdemyBlogProject.WebApi.Controllers
             var blogs = await _blogservice.GetAllWithCategoryIdAsync(id);
 
             return Ok(blogs);
-     
+
         }
 
         [HttpGet("[action]")]
         public async Task<IActionResult> GetLastFiveBlogs()
         {
-            
+
             return Ok(_mapper.Map<List<BlogListDto>>(await _blogservice.GetFiveBlogsAsync()));
         }
+
+        [HttpGet("{id}/[action]")]
+        public async Task<IActionResult> GetComments([FromRoute] int id, [FromQuery] int? parentId)
+        {
+            return Ok(await _commentService.GetAllWithSubCommentsAsync(id, parentId));
+        }
+
 
 
     }
