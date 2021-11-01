@@ -19,5 +19,7 @@ namespace UdemyBlogProject.BusinessLayer.Interfaces
 
         Task<List<Blog>> GetFiveBlogsAsync();
 
+        Task<List<Blog>> SearchBlogsAsync(string searchString);
+
     }
 }
