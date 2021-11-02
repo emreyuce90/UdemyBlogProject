@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UdemyBlogProject.BusinessLayer.Interfaces;
+using UdemyBlogProject.DTO;
 using UdemyBlogProject.DTO.DTOs.BlogCategoryDtos;
 using UdemyBlogProject.DTO.DTOs.BlogDtos;
 using UdemyBlogProject.Entities.Concrete;
@@ -109,7 +110,7 @@ namespace UdemyBlogProject.WebApi.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            await _blogservice.RemoveAsync(new Blog { Id = id });
+            await _blogservice.RemoveAsync(await _blogservice.GetByIdAsync(id));
             return NoContent();
         }
 
@@ -154,6 +155,12 @@ namespace UdemyBlogProject.WebApi.Controllers
             return Ok(await _commentService.GetAllWithSubCommentsAsync(id, parentId));
         }
 
+        [HttpPost("[action]")]
+        public async Task<IActionResult> AddComment(CommentAddDto commentAddDto)
+        {
+            await _commentService.AddAsync(_mapper.Map<Comment>(commentAddDto));            
+            return Created("",commentAddDto);
+        }
 
 
     }

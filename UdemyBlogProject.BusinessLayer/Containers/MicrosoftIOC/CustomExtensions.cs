@@ -10,6 +10,7 @@ using UdemyBlogProject.BusinessLayer.ValidationRules;
 using UdemyBlogProject.BusinessLayer.ValidationRules.FluentValidation;
 using UdemyBlogProject.DataAccessLayer.Concrete.EntityFrameworkCore.Repositories;
 using UdemyBlogProject.DataAccessLayer.Interfaces;
+using UdemyBlogProject.DTO;
 using UdemyBlogProject.DTO.DTOs.AppUserDtos;
 using UdemyBlogProject.DTO.DTOs.BlogCategoryDtos;
 using UdemyBlogProject.DTO.DTOs.CategoryDtos;
@@ -43,6 +44,7 @@ namespace UdemyBlogProject.BusinessLayer.Containers.MicrosoftIOC
             services.AddTransient<IValidator<BlogCategoryDto>, BlogCategoryValidator>();
             services.AddTransient<IValidator<CategoryAddDto>,CategoryAddValidator>();
             services.AddTransient<IValidator<CategoryUpdateDto>,CategoryUpdateValidator>();
+            services.AddTransient<IValidator<CommentAddDto>,CommentAddValidator>();
            
             
         }
