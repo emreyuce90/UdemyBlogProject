@@ -6,6 +6,7 @@ using System.Text;
 using UdemyBlogProject.BusinessLayer.Concrete;
 using UdemyBlogProject.BusinessLayer.Interfaces;
 using UdemyBlogProject.BusinessLayer.Utilities.JwtTools;
+using UdemyBlogProject.BusinessLayer.Utilities.LogTool;
 using UdemyBlogProject.BusinessLayer.ValidationRules;
 using UdemyBlogProject.BusinessLayer.ValidationRules.FluentValidation;
 using UdemyBlogProject.DataAccessLayer.Concrete.EntityFrameworkCore.Repositories;
@@ -35,6 +36,7 @@ namespace UdemyBlogProject.BusinessLayer.Containers.MicrosoftIOC
 
 
             services.AddScoped<IJwtService, JwtManager>();
+            services.AddScoped<ICustomLogger, NLogAdapter>();
 
             services.AddScoped<IAppUserService, AppUserManager>();
             services.AddScoped<IAppUserDal, EfAppUserRepository>();

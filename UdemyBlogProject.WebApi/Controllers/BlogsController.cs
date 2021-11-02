@@ -162,6 +162,16 @@ namespace UdemyBlogProject.WebApi.Controllers
             return Created("",commentAddDto);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> SearchBlog([FromQuery]string s)
+        {
+            if (String.IsNullOrWhiteSpace(s))
+            {
+                return Ok(_mapper.Map<List<BlogListDto>>(await _blogservice.GetAllAsync()));
+            }
+            return Ok(_mapper.Map<List<BlogListDto>>(await _blogservice.SearchBlogsAsync(s)));
+        }
+
 
     }
 }

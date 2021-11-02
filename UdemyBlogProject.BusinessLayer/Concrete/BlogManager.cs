@@ -57,5 +57,12 @@ namespace UdemyBlogProject.BusinessLayer.Concrete
         {
            return await _blogDal.GetFiveBlogsAsync();
         }
+
+        public async Task<List<Blog>> SearchBlogsAsync(string searchString)
+        {
+            return await _genericDal.GetAllAsync
+               (I => I.Description.Contains(searchString.ToLower()) ||
+               I.Title.Contains(searchString.ToLower()));
+        }
     }
 }

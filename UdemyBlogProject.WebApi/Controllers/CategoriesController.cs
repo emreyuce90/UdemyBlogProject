@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UdemyBlogProject.BusinessLayer.Interfaces;
+using UdemyBlogProject.BusinessLayer.Utilities.LogTool;
 using UdemyBlogProject.DTO.DTOs.CategoryDtos;
 using UdemyBlogProject.Entities.Concrete;
 using UdemyBlogProject.WebApi.CustomFilters;
@@ -19,10 +21,12 @@ namespace UdemyBlogProject.WebApi.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ICategoryService _categoryService;
-        public CategoriesController(ICategoryService categoryService, IMapper mapper)
+        private readonly ICustomLogger _logger;
+        public CategoriesController(ICategoryService categoryService, IMapper mapper,ICustomLogger logger)
         {
             _categoryService = categoryService;
             _mapper = mapper;
+            _logger = logger;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -99,6 +103,18 @@ namespace UdemyBlogProject.WebApi.Controllers
             return Ok (_mapper.Map<CategoryListDto>(await _categoryService.GetCategoriesByBlogIdAsync(id)));
         }
 
+
+        //Error actionuna bir hata geldiğinde yakalaması için bu parametreyi geçtik
+        [Route("/Error")]
+        public IActionResult Error()
+        {
+            //Startup tarafında yazdığımız global error handler dan gelen hata
+             var error= HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            //loglama yap
+            _logger.Log($"\n Hatanın oluştuğu yer :{error.Path} \n Hata Mesajı : {error.Error.Message} \n Stack Trace  :{error.Error.StackTrace}");
+            //Client a gösterilen kısım
+            return Problem("Bir hata meydana geldi,yazılım geliştirme ekibimiz tarafından en kısa zamanda fixlenecek");
+        }
 
     }
 }

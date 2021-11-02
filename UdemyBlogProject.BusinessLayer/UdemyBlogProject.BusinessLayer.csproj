@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.3" />
+    <PackageReference Include="Nlog" Version="4.7.12" />
+    <PackageReference Include="Nlog.Config" Version="4.7.12" />
   </ItemGroup>
 
   <ItemGroup>
