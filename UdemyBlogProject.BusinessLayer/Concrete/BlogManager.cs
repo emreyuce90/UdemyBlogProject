@@ -39,7 +39,7 @@ namespace UdemyBlogProject.BusinessLayer.Concrete
             var blog = await _blogCategoryDal.GetAsync(I => I.BlogId == blogCategoryDto.BlogId && I.CategoryId == blogCategoryDto.CategoryId);
             if (blog!=null)
             {
-                await _blogCategoryDal.RemoveAsync(new BlogCategory { BlogId=blogCategoryDto.BlogId,CategoryId = blogCategoryDto.CategoryId});
+                await _blogCategoryDal.RemoveAsync(blog);
             }
         }
 
@@ -60,9 +60,7 @@ namespace UdemyBlogProject.BusinessLayer.Concrete
 
         public async Task<List<Blog>> SearchBlogsAsync(string searchString)
         {
-            return await _genericDal.GetAllAsync
-               (I => I.Description.Contains(searchString.ToLower()) ||
-               I.Title.Contains(searchString.ToLower()));
+            return await _blogDal.SearchBlogsAsync(searchString);
         }
     }
 }

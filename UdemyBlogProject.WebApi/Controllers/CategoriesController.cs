@@ -100,7 +100,7 @@ namespace UdemyBlogProject.WebApi.Controllers
         public async Task<IActionResult> GetCategoriesByBlogId(int id)
         {
             
-            return Ok (_mapper.Map<CategoryListDto>(await _categoryService.GetCategoriesByBlogIdAsync(id)));
+            return Ok (_mapper.Map<List<CategoryListDto>>(await _categoryService.GetCategoriesByBlogIdAsync(id)));
         }
 
 

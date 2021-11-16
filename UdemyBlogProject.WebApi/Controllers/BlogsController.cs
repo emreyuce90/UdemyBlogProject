@@ -127,7 +127,7 @@ namespace UdemyBlogProject.WebApi.Controllers
         [ValidModel]
         [Authorize]
         [HttpDelete("[action]")]
-        public async Task<IActionResult> RemoveCategoryFromBlog(BlogCategoryDto blogCategoryDto)
+        public async Task<IActionResult> RemoveCategoryFromBlog([FromQuery]BlogCategoryDto blogCategoryDto)
         {
             await _blogservice.DeleteCategoryFromBlog(blogCategoryDto);
             return NoContent();
@@ -169,7 +169,7 @@ namespace UdemyBlogProject.WebApi.Controllers
             {
                 return Ok(_mapper.Map<List<BlogListDto>>(await _blogservice.GetAllAsync()));
             }
-            return Ok(_mapper.Map<List<BlogListDto>>(await _blogservice.SearchBlogsAsync(s)));
+            return Ok(await _blogservice.SearchBlogsAsync(s));
         }
 
 

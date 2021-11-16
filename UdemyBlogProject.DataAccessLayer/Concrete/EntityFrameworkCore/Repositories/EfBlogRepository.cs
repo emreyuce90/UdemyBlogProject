@@ -25,13 +25,13 @@ namespace UdemyBlogProject.DataAccessLayer.Concrete.EntityFrameworkCore.Reposito
             }).Where(I => I.categoryBlog.CategoryId == categoryId)
             .Select(I => new Blog
             {
-                Description=I.blog.Description,
-                Id=I.blog.Id,
-                ImagePath=I.blog.ImagePath,
-                ReleaseDate=I.blog.ReleaseDate,
-                ShortDescription=I.blog.ShortDescription,
-                Title=I.blog.ShortDescription,
-                
+                Description = I.blog.Description,
+                Id = I.blog.Id,
+                ImagePath = I.blog.ImagePath,
+                ReleaseDate = I.blog.ReleaseDate,
+                ShortDescription = I.blog.ShortDescription,
+                Title = I.blog.ShortDescription,
+
 
             }).ToListAsync();
         }
@@ -39,7 +39,13 @@ namespace UdemyBlogProject.DataAccessLayer.Concrete.EntityFrameworkCore.Reposito
         public async Task<List<Blog>> GetFiveBlogsAsync()
         {
             using var context = new UdemyBlogContext();
-          return await context.Blogs.OrderByDescending(I => I.ReleaseDate).Take(5).ToListAsync();
+            return await context.Blogs.OrderByDescending(I => I.ReleaseDate).Take(5).ToListAsync();
+        }
+
+        public Task<List<Blog>> SearchBlogsAsync(string searchString)
+        {
+            var context = new UdemyBlogContext();
+            return context.Blogs.Where(I => I.Description.Contains(searchString)).ToListAsync();
         }
     }
 }

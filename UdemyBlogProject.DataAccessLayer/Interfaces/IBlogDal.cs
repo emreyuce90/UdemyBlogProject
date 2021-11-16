@@ -13,6 +13,8 @@ namespace UdemyBlogProject.DataAccessLayer.Interfaces
 
         Task<List<Blog>> GetFiveBlogsAsync();
 
+        Task<List<Blog>> SearchBlogsAsync(string searchString);
+
         
     }
 }
